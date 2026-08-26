@@ -1,0 +1,4 @@
+package com.mycropdiary.api.security;
+
+public record CurrentUser(Long id, String email, String role) {
+}
