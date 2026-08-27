@@ -43,9 +43,35 @@ src/main/java/com/mycropdiary/api
 └── admin               # Users, crops, rules, KB, feedback reply, stats, audit
 ```
 
-`landplot` is included as the reference vertical slice with controller, service,
-repository, entity and DTO records. The other business APIs intentionally
-contain endpoint placeholders labeled with their planned implementation week.
+`landplot` is a completed reference vertical slice with controller, service,
+repository, entity, mapper, validated DTOs, ownership checks and automated tests.
+The other business APIs intentionally contain endpoint placeholders labeled with
+their planned implementation week.
+
+## Manage Land Plot API
+
+Until the JWT filter is implemented, the Land Plot endpoints use the temporary
+`X-Demo-User-Id` request header. Ownership is still enforced in every service
+query, so one user cannot view or modify another user's plots.
+
+| Method | Endpoint | Purpose |
+|---|---|---|
+| `GET` | `/api/land-plots` | List, search, filter, sort and paginate owned plots |
+| `GET` | `/api/land-plots/{id}` | View an owned plot |
+| `POST` | `/api/land-plots` | Create a plot |
+| `PUT` | `/api/land-plots/{id}` | Update a non-archived plot |
+| `PATCH` | `/api/land-plots/{id}/status` | Activate or deactivate a plot |
+| `POST` | `/api/land-plots/{id}/archive` | Archive a plot while preserving history |
+
+List example:
+
+```http
+GET /api/land-plots?keyword=north&status=ACTIVE&page=0&size=10&sortBy=updatedAt&direction=DESC
+X-Demo-User-Id: 1
+```
+
+Archive is rejected when the plot still has a `PLANNED` or `IN_PROGRESS` crop
+season. Archived plots are read-only and are never hard-deleted.
 
 ## Local setup
 
