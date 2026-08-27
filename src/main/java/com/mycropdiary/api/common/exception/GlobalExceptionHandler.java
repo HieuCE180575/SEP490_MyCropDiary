@@ -29,7 +29,11 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     ResponseEntity<ApiResponse<Void>> handleUnexpected(Exception ex, HttpServletRequest request) {
+        String detailMessage = ex.getMessage() != null ? ex.getMessage() : "An unexpected error occurred";
+        if (ex.getCause() != null && ex.getCause().getMessage() != null) {
+            detailMessage += " -> " + ex.getCause().getMessage();
+        }
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(ApiResponse.error("INTERNAL_ERROR", "An unexpected error occurred", request.getHeader("X-Request-Id")));
+                .body(ApiResponse.error("INTERNAL_ERROR", detailMessage, request.getHeader("X-Request-Id")));
     }
 }
