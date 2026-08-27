@@ -6,3 +6,6 @@ target/
 logs/
 uploads/
 *.log
+Huong_dan_quy_trinh_Git.md
+src/main/resources/db/migration/V1__create_crop_seasons_table.sql
+
