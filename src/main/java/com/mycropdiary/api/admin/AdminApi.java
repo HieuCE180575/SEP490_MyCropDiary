@@ -14,11 +14,6 @@ public class AdminApi {
         return ApiResponse.success(Map.of("module", "Admin Statistics", "implementationWeek", 14));
     }
 
-    @GetMapping("/users")
-    ApiResponse<Map<String, Object>> users() {
-        return ApiResponse.success(Map.of("module", "User Management"));
-    }
-
     @GetMapping("/crop-categories")
     ApiResponse<Map<String, Object>> cropCategories() {
         return ApiResponse.success(Map.of("module", "Crop Category Management"));
